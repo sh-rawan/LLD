@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "SOLID Design priciples",
+        "5Days5Designs",
+        "1. Case Studies",
+        "2. Case Studies"
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
+}
