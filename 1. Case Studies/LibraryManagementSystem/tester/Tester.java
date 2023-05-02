@@ -1,5 +1,6 @@
 package LibraryManagementSystem.tester;
 
+import java.lang.reflect.Member;
 import java.util.*;
 
 import LibraryManagementSystem.auth.UserAuthenticator;
@@ -16,6 +17,9 @@ import LibraryManagementSystem.searcher.NameBasedBookSearcher;
 import LibraryManagementSystem.searcher.NameBasedMemberSearcher;
 
 public class Tester {
+
+    private final Library library = new Library();
+
     public List<BookCopy> searchBooksByBookName(String bookName) {
         if(bookName == null)
             throw new IllegalArgumentException("Book name can not be null");
@@ -53,7 +57,7 @@ public class Tester {
         BookCopy bookCopy = new BookCopy(new BookDetails(bookName, publicationDate, authors), IDGenerator.generateID());
         
         // why library() why not library here
-        new Library().addBookCopy(bookCopy);
+        library.addBookCopy(bookCopy);
     }
 
     public void deleteBook(int bookCopyId, String adminToken) throws IllegalAccessException{
@@ -64,7 +68,7 @@ public class Tester {
         BookCopy bookCopy = bookSearcher.search().get(0);
         // Do the validation here id book copy is not null
         
-        new Library().deleteBookCopy(bookCopy);
+        library.deleteBookCopy(bookCopy);
     }
 
     public void blockMember(int memberId, String adminToken){
@@ -77,17 +81,81 @@ public class Tester {
 
         MemberSearcher memberSearcher = new IdBasedMemberSearcher(memberId);
         List<Member> mem = memberSearcher.search();
-        if(mem == null || mem.size == 0){}
+        if(mem == null || mem.size() == 0){}
             // throw exception
 
-        new Library().blockMember(mem.get(0));
+        library.blockMember(mem.get(0));
     }
 
-    public void issueBook(int bookCopyId, int memberId, String adminToken){}
+    public void issueBook(int bookCopyId, int memberId, String adminToken){
+        if(memberId < 0 || adminToken == null || adminToken.length() == 0){
+            // throw exception
+        }
 
-    public void returnBook(int bookCopyId, int memberId, String adminToken){} 
+        if(!UserAuthenticator.isAdmin(adminToken)){}
+            // throw exception
 
-    public Member getBorrowerOfBook(int bookId, String adminToken){}
+        MemberSearcher memberSearcher = new IdBasedMemberSearcher(memberId);
+        List<Member> mem = memberSearcher.search();
+        if(mem == null || mem.size() == 0){}
+            // throw exception
 
-    public List<Member> getBooksBorrowedByMember(int memberId, String adminToken){}
+        BookSearcher bookSearcher = new IdBasedBookSearcher(bookCopyId);
+        List<BookCopy> book = bookSearcher.search();
+        if(book == null || book.size() == 0){}
+            // throw exception
+
+        library.issueBook(mem.get(0), book.get(0));
+
+    }
+
+    public void returnBook(int bookCopyId, int memberId, String adminToken){
+        if(memberId < 0 || adminToken == null || adminToken.length() == 0){
+            // throw exception
+        }
+
+        if(!UserAuthenticator.isAdmin(adminToken)){}
+            // throw exception
+
+        MemberSearcher memberSearcher = new IdBasedMemberSearcher(memberId);
+        List<Member> mem = memberSearcher.search();
+        if(mem == null || mem.size() == 0){}
+            // throw exception
+
+        BookSearcher bookSearcher = new IdBasedBookSearcher(bookCopyId);
+        List<BookCopy> book = bookSearcher.search();
+        if(book == null || book.size() == 0){}
+            // throw exception
+
+        library.returnBook(mem.get(0), book.get(0));
+
+    } 
+
+    public Member getBorrowerOfBook(int bookId, String adminToken){
+        if(!UserAuthenticator.isAdmin(adminToken)){}
+            // throw exception
+
+        BookSearcher bookSearcher = new IdBasedBookSearcher(bookId);
+        List<BookCopy> book = bookSearcher.search();
+        if(book == null || book.size() == 0){}
+            // throw exception
+
+        return library.getBorrower(book.get(0));
+    }
+
+    public List<BookCopy> getBooksBorrowedByMember(int memberId, String adminToken){
+        if(memberId < 0 || adminToken == null || adminToken.length() == 0){
+            // throw exception
+        }
+
+        if(!UserAuthenticator.isAdmin(adminToken)){}
+            // throw exception
+
+        MemberSearcher memberSearcher = new IdBasedMemberSearcher(memberId);
+        List<Member> mem = memberSearcher.search();
+        if(mem == null || mem.size() == 0){}
+            // throw exception
+
+        return library.getBorrowedBooks(mem.get(0));
+    }
 }
