@@ -1,9 +1,9 @@
 public class Test {
     public static void main(String[] args) {
         // InnerTest x = new InnerTest_1();
-        printMe();
+        // printMe();
     }
-    public static void printMe(){System.out.println("Hello from print me.");}
+    public void printMe(){System.out.println("Hello from print me.");}
 }
 
 // /**

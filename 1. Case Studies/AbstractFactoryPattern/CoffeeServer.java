@@ -1,4 +1,4 @@
-package FactoryPattern;
+package AbstractFactoryPattern;
 
 
 //Example of dependancy inversion principal
@@ -7,43 +7,19 @@ package FactoryPattern;
 
 
 // import FactoryPattern.coffee.Cappuccino;
-import FactoryPattern.coffee.Coffee;
+import AbstractFactoryPattern.coffee.Coffee;
 // import FactoryPattern.coffee.Espresso;
 // import FactoryPattern.coffee.Robusta;
 
 public class CoffeeServer {
-    
-    // Not a good design pattern because you need to put so many if statements
-    // Also putting this code in the main class is not good because we are transfering the problem
 
-    // public Coffee serve(String coffeeType){
-    //     Coffee coffee;
-    //     if(coffeeType.equals("Cappuccino")){
-    //         coffee = new Cappuccino();
-    //     }else if(coffeeType.equals("Espresso")){
-    //         coffee = new Espresso();
-    //     }else{
-    //         coffee = new Robusta();
-    //     }
-    //     coffee.brew();
-    //     coffee.boil();
-    //     return coffee;
+    private AbstractCoffeeFactory factory;
+
+    public CoffeeServer(AbstractCoffeeFactory factory){
+        this.factory = factory;
+    }
 
     //         ---------------------------------OldDesign-------------------------------------
-    //
-    //
-    //                                -<--<--- CoffeeServer --->-->---
-    //                              v              V                   v
-    //                             v               V                    v 
-    //                            v   Coffee(Everyone depends here)      v
-    //                      Cappuccino            ^                     Robusta
-    //                          |                 ^                        |
-    //                          |               /   \                      |
-    //                          -->--->---->---       -<-----<-----<----<---
-    
-
-    //        ----------------------------------NewDesign--------------------------------------
-    //
     //
     //                                              CoffeeServer
     //                                               //   | 
@@ -57,14 +33,30 @@ public class CoffeeServer {
     //                          |                 ^                        |
     //                          |               /   \                      |
     //                          -->--->---->---       -<-----<-----<----<---
+
+    //        ----------------------------------NewDesign--------------------------------------
+    //
+    //
+    //                       AbstractFactory  <<<<<<<<  CoffeeServer
+    //                                  ^                 | 
+    //                                   \\               |
+    //                                     \\             |
+    //                                -<-- CoffeeFactory--V----->-->---
+    //                              v              V      |            v
+    //                             v               V      V             v 
+    //                            v   Coffee(Everyone depends here)      v
+    //                      Cappuccino            ^                     Robusta
+    //                          |                 ^                        |
+    //                          |               /   \                      |
+    //                          -->--->---->---       -<-----<-----<----<---
     
     // But still the problem is in order to compile Coffee Server we need to compile all the other classes
     // Solution is to create the abstract factory
     // }
-
+    
 
     public Coffee serve(String coffeeType){
-        Coffee coffee = new CoffeeFactory().getCoffee(coffeeType);
+        Coffee coffee = factory.getCoffee(coffeeType);
         coffee.brew();
         coffee.boil();
         return coffee;
