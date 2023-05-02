@@ -20,6 +20,10 @@ public class User{
         this.age = builder.age;
     }
 
+    public String toString(){
+        return "id : " + Integer.toString(id ) + " :\nMy name is " + name + "\nAge is " + Integer.toString(age) + "\nCall me here if you want " + phoneNumber;
+    }
+
 
     // public void setPhoneNumber(String phoneNumber) {
     //     this.phoneNumber = phoneNumber;

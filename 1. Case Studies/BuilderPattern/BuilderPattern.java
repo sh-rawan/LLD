@@ -4,16 +4,17 @@ public class BuilderPattern {
     
     public static void main(String[] args) {
         // Method 1
-        User.Builder builder = new User.Builder(2, "Jack");
-        builder.setPhoneNumber("88-3977-6321");
-        builder.setAge(24);
-        User usr = new User(builder);
+        // User.Builder builder = new User.Builder(2, "Jack");
+        // builder.setPhoneNumber("88-3977-6321");
+        // builder.setAge(24);
+        // User usr = new User(builder);
 
 
         // Method 2
-        User usr2 = new User.Builder(2, "Jack")
+        User usr2 = new User.Builder(2, "Sagar")
                             .setPhoneNumber("88-3977-6321")
-                            .setAge(24).build();
+                            .setAge(29).build();
+        System.out.println(usr2);
     }
 }
  
