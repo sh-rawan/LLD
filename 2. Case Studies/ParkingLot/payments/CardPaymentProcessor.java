@@ -8,9 +8,13 @@ public class CardPaymentProcessor implements PaymentProcessor {
         this.amount = amount;
         this.cardDetails = cardDetails;
     }
-    
+
     public boolean executePayment() {
         return false;
+    }
+
+    public CardDetails getCardDetails() {
+        return cardDetails;
     }
 
     public double getAmount() {
