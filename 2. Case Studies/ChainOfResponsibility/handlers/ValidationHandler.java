@@ -14,7 +14,7 @@ public class ValidationHandler implements RequestHandler {
             throw new IllegalArgumentException("empty header");
         }
         if (request.getBody() == null || request.getBody().isEmpty()) {
-            throw new IllegalArgumentException("empty header");
+            throw new IllegalArgumentException("empty body");
         }
         System.out.println("Validation Passed");
         this.nextHandler.handle(request);
