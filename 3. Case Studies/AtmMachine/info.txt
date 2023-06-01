@@ -1,0 +1,6 @@
+you can design similar patterns like
+elevator design
+vending machine design
+
+
+
