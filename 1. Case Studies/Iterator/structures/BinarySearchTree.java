@@ -5,28 +5,28 @@ import java.util.List;
 
 import Iterator.iterators.Iterator;
 import Iterator.iterators.BSTIterator;
-import Iterator.iterators.Iterable;
-
-
 
 // Air india flight data provider
-public class BinarySearchTree implements Iterable{
+public class BinarySearchTree implements Iterable {
     private final TreeNode root;
-    public BinarySearchTree(TreeNode root){this.root = root;}
 
-    public void insert(TreeNode node){
+    public BinarySearchTree(TreeNode root) {
+        this.root = root;
+    }
+
+    public void insert(TreeNode node) {
         TreeNode current = root, parent = null;
-        while(current != null) {
-            if(node.getData() > current.getData()){
+        while (current != null) {
+            if (node.getData() > current.getData()) {
                 parent = current;
                 current = current.getRight();
-            }else{
+            } else {
                 parent = current;
                 current = current.getLeft();
             }
         }
 
-        if(node.getData() > parent.getData())
+        if (node.getData() > parent.getData())
             parent.setRight(node);
         else
             parent.setLeft(node);
@@ -38,8 +38,8 @@ public class BinarySearchTree implements Iterable{
         return nodes;
     }
 
-    private void traverse(TreeNode root, List<TreeNode> nodes){
-        if(root == null)
+    private void traverse(TreeNode root, List<TreeNode> nodes) {
+        if (root == null)
             return;
         traverse(root.getLeft(), nodes);
         nodes.add(root);
